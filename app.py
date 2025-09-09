@@ -1,5 +1,5 @@
-# app.py  — Offline "Live" Airline Satisfaction Dashboard (Dash)
-# Run:  python app.py
+# app.py — Offline "Live" Airline Satisfaction Dashboard (Dash)
+# Run: python app.py
 # Files expected in the SAME folder: train.csv
 
 import pandas as pd
@@ -54,6 +54,7 @@ for col in ["Class", "Type of Travel", "Flight Distance", "Age"]:
 
 # ============= 2) DASH APP SETUP =============
 app = dash.Dash(__name__)
+server = app.server  # 🎯 CRITICAL LINE FOR DEPLOYMENT
 app.title = "Offline Live Airline Satisfaction"
 
 # Slider bounds
@@ -153,7 +154,7 @@ app.layout = html.Div([
         dcc.Graph(id="pie-graph")
     ], style={"width":"60%","margin":"12px auto"}),
 
-    # Hidden “engine” parts
+    # Hidden "engine" parts
     dcc.Interval(id="tick", interval=1000, n_intervals=0, disabled=False),  # default = playing
     dcc.Store(id="play-state", data=True),    # True=playing, False=paused
 ], style={"fontFamily":"Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
