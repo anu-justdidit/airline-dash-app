@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airline Satisfaction Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        body { 
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 10px 0 0 0;
+        }
+        .chart-container {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .stat-card h3 {
+            margin: 0;
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✈️ Airline Customer Satisfaction Dashboard</h1>
+            <p>Interactive Analytics • Real-time Insights • Professional Grade</p>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <h3>TOTAL PASSENGERS</h3>
+                <div class="value">21,048</div>
+            </div>
+            <div class="stat-card">
+                <h3>SATISFACTION RATE</h3>
+                <div class="value">59.5%</div>
+            </div>
+            <div class="stat-card">
+                <h3>TOP AIRLINE</h3>
+                <div class="value">IndiGo</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div id="mainChart" style="height: 500px;"></div>
+        </div>
+
+        <div style="display: flex; gap: 20px;">
+            <div class="chart-container" style="flex: 1;">
+                <div id="pieChart" style="height: 400px;"></div>
+            </div>
+            <div class="chart-container" style="flex: 1;">
+                <div id="trendChart" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Airline Data
+        const airlineData = {
+            airlines: ['Air India', 'IndiGo', 'SpiceJet', 'Vistara', 'Akasa Air'],
+            satisfied: [3200, 4100, 2800, 2400, 1800],
+            dissatisfied: [1800, 1200, 2200, 3300, 1500],
+            years: [2020, 2021, 2022, 2023, 2024],
+            trend: [55, 58, 60, 59, 62]
+        };
+
+        // 1. Main Bar Chart
+        Plotly.newPlot('mainChart', [{
+            x: airlineData.airlines,
+            y: airlineData.satisfied,
+            name: 'Satisfied',
+            type: 'bar',
+            marker: { color: '#3498db' }
+        }, {
+            x: airlineData.airlines,
+            y: airlineData.dissatisfied,
+            name: 'Neutral/Dissatisfied',
+            type: 'bar',
+            marker: { color: '#e74c3c' }
+        }], {
+            title: 'Passenger Satisfaction by Airline',
+            barmode: 'stack',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: 'Inter, sans-serif' }
+        });
+
+        // 2. Pie Chart
+        Plotly.newPlot('pieChart', [{
+            values: [12500, 8500],
+            labels: ['Satisfied', 'Neutral/Dissatisfied'],
+            type: 'pie',
+            hole: 0.4,
+            marker: { colors: ['#3498db', '#e74c3c'] }
+        }], {
+            title: 'Overall Satisfaction Distribution',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: 'Inter, sans-serif' }
+        });
+
+        // 3. Trend Chart
+        Plotly.newPlot('trendChart', [{
+            x: airlineData.years,
+            y: airlineData.trend,
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { color: '#9b59b6', width: 3 },
+            marker: { size: 8 }
+        }], {
+            title: 'Satisfaction Trend (2020-2024)',
+            xaxis: { title: 'Year' },
+            yaxis: { title: 'Satisfaction Rate %' },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: 'Inter, sans-serif' }
+        });
+    </script>
+</body>
+</html>
